@@ -1,6 +1,8 @@
 name: CD - Continuous Deployment
 
 on:
+  push:
+    branches: [main, master]
   workflow_run:
     workflows: ["CI/CD Pipeline"]
     types:
@@ -12,7 +14,7 @@ jobs:
   deploy-to-kubernetes:
     name: Deploy to Kubernetes
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Checkout code
@@ -80,11 +82,25 @@ jobs:
             -p 8080:8080 \
             leak-detector-app:latest
 
-          # Wait for application to start
-          sleep 30
-
-          # Verify application is running
-          curl --fail http://localhost:8080/actuator/health || exit 1
+      - name: Wait for application to be ready
+        run: |
+          echo "Waiting for application to start..."
+          max_attempts=30
+          attempt=0
+          
+          while [ $attempt -lt $max_attempts ]; do
+            if curl -f http://localhost:8080/actuator/health 2>/dev/null; then
+              echo "Application is ready!"
+              exit 0
+            fi
+            attempt=$((attempt + 1))
+            echo "Attempt $attempt/$max_attempts - waiting..."
+            sleep 5
+          done
+          
+          echo "Application failed to start within 150 seconds"
+          docker logs leak-detector-app
+          exit 1
 
       - name: Run OWASP ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.10.0
