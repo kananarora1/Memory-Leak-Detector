@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./mvnw.cmd clean compile:*)",
+      "Bash(java:*)",
+      "Bash(./mvnw.cmd clean test:*)",
+      "Bash(./mvnw.cmd clean install:*)",
+      "Bash(cmd /c \"dir /b /ad \"\"C:\\\\Program Files\\\\Eclipse Adoptium\"\" 2>nul\")",
+      "Bash(dir:*)",
+      "Bash(where:*)",
+      "Bash(./mvnw.cmd clean package:*)",
+      "Bash(./mvnw.cmd spring-boot:run:*)",
+      "Bash(curl:*)",
+      "Bash(python -m json.tool:*)"
+    ]
+  }
+}

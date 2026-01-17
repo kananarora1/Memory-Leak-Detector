@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: leak-detector
+  labels:
+    name: leak-detector
+    environment: production
+    app: java-leak-detector
