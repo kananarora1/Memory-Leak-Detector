@@ -250,7 +250,7 @@ src/
 
 ## Technology Stack
 
-- **Spring Boot 4.0.1**
+- **Spring Boot 3.2.1**
 - **Java 17**
 - **Spring Data JPA**
 - **H2 Database** (dev/test)
@@ -508,10 +508,4 @@ docker run -t owasp/zap2docker-stable zap-baseline.py \
 | K8s deployment fails | Verify kubectl config, check cluster status |
 | Tests failing | Run locally first: `./mvnw test` |
 
-## License
 
-This project is for educational purposes as part of DevOps coursework.
-
-## Contributors
-
-Generated with Claude Code
