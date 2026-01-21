@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +30,8 @@ class HeapSimulationEngineTest {
 
     @BeforeEach
     void setUp() {
-        heapSimulationEngine = new HeapSimulationEngine(heapObjectRepository);
+        ReflectionTestUtils.setField(heapSimulationEngine, "youngGenAgeThreshold", 10);
+        ReflectionTestUtils.setField(heapSimulationEngine, "maxHeapSizeKB", 1048576L);
     }
 
     @Test
@@ -71,13 +73,6 @@ class HeapSimulationEngineTest {
 
     @Test
     void testDereferenceObjects_Success() {
-        HeapObject obj1 = HeapObject.builder()
-                .id(1L)
-                .referenced(true)
-                .build();
-
-        when(heapObjectRepository.save(any(HeapObject.class))).thenReturn(obj1);
-
         heapSimulationEngine.dereferenceObjects(Arrays.asList(1L, 2L));
 
         verify(heapObjectRepository, times(0)).save(any(HeapObject.class));
