@@ -11,7 +11,12 @@
       "Bash(./mvnw.cmd clean package:*)",
       "Bash(./mvnw.cmd spring-boot:run:*)",
       "Bash(curl:*)",
-      "Bash(python -m json.tool:*)"
+      "Bash(python -m json.tool:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nFix DAST job failure by installing wget in Docker image\n\nThe DAST job was failing because the Alpine-based Docker image\ndidn''t have wget installed, which is required for the healthcheck.\nThis caused the container to fail to start properly during the\nDAST security scan.\n\nChanges:\n- Added wget installation in Dockerfile using apk package manager\n- This fixes the healthcheck that was failing in the CD pipeline\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(gh pr create:*)"
     ]
   }
 }
