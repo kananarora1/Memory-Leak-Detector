@@ -16,7 +16,10 @@
       "Bash(git add:*)",
       "Bash(git commit -m \"$\\(cat <<''EOF''\nFix DAST job failure by installing wget in Docker image\n\nThe DAST job was failing because the Alpine-based Docker image\ndidn''t have wget installed, which is required for the healthcheck.\nThis caused the container to fail to start properly during the\nDAST security scan.\n\nChanges:\n- Added wget installation in Dockerfile using apk package manager\n- This fixes the healthcheck that was failing in the CD pipeline\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
       "Bash(git push:*)",
-      "Bash(gh pr create:*)"
+      "Bash(gh pr create:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd master branch to CI/CD workflow triggers\n\nThe CI/CD pipeline wasn''t running because the workflow was only\nconfigured for main and develop branches, but the repository uses\nmaster as the main branch.\n\nChanges:\n- Added master branch to push and pull_request triggers in ci-cd.yml\n- This will enable the CI/CD pipeline to run on PRs targeting master\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit:*)",
+      "Bash(git rm:*)"
     ]
   }
 }
