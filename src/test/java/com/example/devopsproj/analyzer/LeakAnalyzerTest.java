@@ -129,6 +129,7 @@ class LeakAnalyzerTest {
     @Test
     void testAnalyzeAndGenerateReport() {
         HeapSnapshot snapshot = HeapSnapshot.builder()
+                .id(1L)
                 .totalHeapUsed(1000L)
                 .timestamp(LocalDateTime.now())
                 .build();
